@@ -31,23 +31,23 @@ class Board
     end
 
     def empty?(location)
-        unless @grid[location[0]][location[1]]
-            true
-        else
+        unless !@grid[location[0]][location[1]]
+            raise "Position is already set"
             false
         end
+        true
     end
 
-    def over?(&condition)
+    def over?
         forward_slash = [[@grid[0][0], @grid[1][1], @grid[2][2]]]
         back_slash = [[@grid[0][2], @grid[1][1], @grid[2][0]]]
 
-        condition ||= Proc.new { |r| r.uniq.length == 1 && r[0] != nil && @winner = r[0] }
+        win_condition = Proc.new { |r| r.uniq.length == 1 && r[0] != nil && @winner = r[0] }
 
-        if (@grid.any?(condition) || 
-            @grid.transpose.any?(condition) ||
-            forward_slash.any?(condition) ||
-            back_slash.any?(condition))
+        if (@grid.any?(win_condition) || 
+            @grid.transpose.any?(win_condition) ||
+            forward_slash.any?(win_condition) ||
+            back_slash.any?(win_condition))
             true
         else
             false

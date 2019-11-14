@@ -27,8 +27,7 @@ class Game
             self.play_turn
             self.switch_player!
         end
-        @board.winner ? (p @board.winner.to_s + " is the winner!") : (p "It's a tie!")
-        @board.print
+        p @board.winner.to_s + " is the winner!"
     end
 
     def play_turn
@@ -36,7 +35,7 @@ class Game
     end
 
     def over?
-        @board.over? || !@board.grid.flatten.include?(nil)
+        @board.over?
     end
 
     def switch_player!

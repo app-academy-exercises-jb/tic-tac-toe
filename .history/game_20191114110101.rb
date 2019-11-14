@@ -27,7 +27,7 @@ class Game
             self.play_turn
             self.switch_player!
         end
-        @board.winner ? (p @board.winner.to_s + " is the winner!") : (p "It's a tie!")
+        @board.winner ? p @board.winner.to_s + " is the winner!" : p "It's a tie!"
         @board.print
     end
 

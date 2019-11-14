@@ -1,6 +1,5 @@
 require_relative "board.rb"
 require_relative "player.rb"
-require "byebug"
 
 class Game
     def initialize(player_1, player_2)
@@ -16,9 +15,6 @@ class Game
         @current_player = @player_1
         @board = Board.new
 
-        @player_1.get_board(@board)
-        @player_2.get_board(@board)
-
         self.play
     end
 
@@ -27,8 +23,7 @@ class Game
             self.play_turn
             self.switch_player!
         end
-        @board.winner ? (p @board.winner.to_s + " is the winner!") : (p "It's a tie!")
-        @board.print
+        p board.winner + " is the winner!"
     end
 
     def play_turn
@@ -36,7 +31,7 @@ class Game
     end
 
     def over?
-        @board.over? || !@board.grid.flatten.include?(nil)
+        @board.over
     end
 
     def switch_player!

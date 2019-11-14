@@ -23,7 +23,7 @@ class Board
     end
 
     def grid
-        Array.new(@grid.length) { |i| @grid[i].dup }
+        @grid
     end
 
     def place_mark(location, mark)
@@ -31,23 +31,18 @@ class Board
     end
 
     def empty?(location)
-        unless @grid[location[0]][location[1]]
-            true
-        else
-            false
+        unless !@grid[location[0]][location[1]]
+            raise "Position is already set"
         end
     end
 
-    def over?(&condition)
-        forward_slash = [[@grid[0][0], @grid[1][1], @grid[2][2]]]
-        back_slash = [[@grid[0][2], @grid[1][1], @grid[2][0]]]
-
-        condition ||= Proc.new { |r| r.uniq.length == 1 && r[0] != nil && @winner = r[0] }
-
-        if (@grid.any?(condition) || 
-            @grid.transpose.any?(condition) ||
-            forward_slash.any?(condition) ||
-            back_slash.any?(condition))
+    def over?
+        forward_slash = [@grid[0][0], @grid[1][1], @grid[2][2]]
+        back_slash = @grid[0][2], @grid[1][1], @grid[2][0]
+        if (@grid.any? { |r| r.uniq.length == 1 && @winner = r[0] } || 
+            @grid.transpose.any? { |r| r.uniq.length == 1 && @winner = r[0] } ||
+            forward_slash.any? { |r| debugger; r.uniq.length == 1 && @winner = r[0] } ||
+            back_slash.any? { |r| r.uniq.length == 1 && @winner = r[0] })
             true
         else
             false

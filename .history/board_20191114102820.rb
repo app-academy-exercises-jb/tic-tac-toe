@@ -27,6 +27,7 @@ class Board
     end
 
     def place_mark(location, mark)
+        debugger
         @grid[location[0]][location[1]] = mark
     end
 
